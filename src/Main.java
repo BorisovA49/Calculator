@@ -1,10 +1,47 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
+import java.util.Scanner;
+
+class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.println("Первое изменение которе я пробую в гите ебаная идея блять 2 ночи я ебусь с этой хуйней но все же ");
-        System.out.println("Hello world");
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        System.out.println("Результат: " + calc(input));
     }
+
+    static String calc(String input) {
+        // Удаляем любые пробелы во входной строке
+        input = input.replaceAll("\\s+", "");
+
+        // Разбиваем входную строку на числа и операцию
+        String[] arr = input.split("[\\D&&[^.]]");
+        double num1 = Double.parseDouble(arr[0]);
+        double num2 = Double.parseDouble(arr[1]);
+        char operator = input.replaceAll("[\\d.]", "").charAt(0);
+
+        // Выполняем арифметическую операцию
+        double result;
+        switch (operator) {
+            case '+':
+                result = num1 + num2;
+                break;
+            case '-':
+                result = num1 - num2;
+                break;
+            case '*':
+                result = num1 * num2;
+                break;
+            case '/':
+                if (num2 != 0) {
+                    result = num1 / num2;
+                } else {
+                    return "Ошибка: деление на ноль.";
+                }
+                break;
+            default:
+                return "Ошибка: неверная арифметическая операция.";
+        }
+        // Возвращаем результат в виде строки
+        return String.valueOf(result);
+    }
+
+
 }
