@@ -1,24 +1,37 @@
 import java.util.Scanner;
+import java.util.HashMap;
 
 class Main {
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         System.out.println("Результат: " + calc(input));
     }
-
     static String calc(String input) {
-        // Удаляем любые пробелы во входной строке
-        input = input.replaceAll("\\s+", "");
 
+        input = input.replaceAll("\\s+", "");         // Удаляем любые пробелы во входной строке
         // Разбиваем входную строку на числа и операцию
-        String[] arr = input.split("[\\D&&[^.]]");
-        double num1 = Double.parseDouble(arr[0]);
-        double num2 = Double.parseDouble(arr[1]);
+        String[] arr = input.split("[\\D]");
+        int num1 = Integer.parseInt(arr[0]);
+        int num2 = Integer.parseInt(arr[1]);
         char operator = input.replaceAll("[\\d.]", "").charAt(0);
 
+        HashMap<Integer, String> arabicToRoman = new HashMap<>();
+        arabicToRoman.put(1, "I");
+        arabicToRoman.put(2, "II");
+        arabicToRoman.put(3, "III");
+        arabicToRoman.put(4, "IV");
+        arabicToRoman.put(5, "V");
+        arabicToRoman.put(6, "VI");
+        arabicToRoman.put(7, "VII");
+        arabicToRoman.put(8, "VIII");
+        arabicToRoman.put(9, "IX");
+        arabicToRoman.put(10, "X");
+
+
         // Выполняем арифметическую операцию
-        double result;
+        int result;
         switch (operator) {
             case '+':
                 result = num1 + num2;
@@ -45,3 +58,4 @@ class Main {
 
 
 }
+
