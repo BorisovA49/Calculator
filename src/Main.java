@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.HashMap;
 
@@ -8,43 +9,54 @@ class Main {
         String input = scanner.nextLine();
         System.out.println("Результат: " + calc(input));
     }
+
     static String calc(String input) {
 
         input = input.replaceAll("\\s+", "");         // Удаляем любые пробелы во входной строке
-        // Разбиваем входную строку на числа и операцию
-        String[] arr = input.split("[\\D]");
-        int num1 = Integer.parseInt(arr[0]);
-        int num2 = Integer.parseInt(arr[1]);
-        char operator = input.replaceAll("[\\d.]", "").charAt(0);
 
-        HashMap<Integer, String> arabicToRoman = new HashMap<>();
-        arabicToRoman.put(1, "I");
-        arabicToRoman.put(2, "II");
-        arabicToRoman.put(3, "III");
-        arabicToRoman.put(4, "IV");
-        arabicToRoman.put(5, "V");
-        arabicToRoman.put(6, "VI");
-        arabicToRoman.put(7, "VII");
-        arabicToRoman.put(8, "VIII");
-        arabicToRoman.put(9, "IX");
-        arabicToRoman.put(10, "X");
+        String[] opera = {"+", "-", "/", "*"};
+        StringBuilder num1 = new StringBuilder();
+        StringBuilder num2 = new StringBuilder();
+        String operators = "";
+
+        for (int i = 0; i < input.length(); i++) {
+            String massInput = String.valueOf(input.charAt(i));
+            if (Arrays.asList(opera).contains(massInput)) {
+                if (!operators.isEmpty()) {
+                    throw new IllegalArgumentException("т.к. формат математической операции не удовлетворяет заданию - два или более операнда и один оператор (+, -, /, *)");
+                }
+                operators = massInput;
+            } else {
+                if (operators.isEmpty()) {
+                    num1.append(massInput);
+                } else {
+                    num2.append(massInput);
+                }
+            }
+
+        }
 
 
-        // Выполняем арифметическую операцию
+        if (!(Integer.parseInt(String.valueOf(num1)) > 0 && Integer.parseInt(String.valueOf(num1)) < 11 && Integer.parseInt(String.valueOf(num2)) > 0 && Integer.parseInt(String.valueOf(num2)) < 11)) {
+            throw new IllegalArgumentException("цыфра пиздец хдоровая ");
+        }
+
+
         int result;
-        switch (operator) {
-            case '+':
-                result = num1 + num2;
+
+        switch (operators) {
+            case "+":
+                result = Integer.parseInt(String.valueOf(num1)) + Integer.parseInt(String.valueOf(num2));
                 break;
-            case '-':
-                result = num1 - num2;
+            case "-":
+                result = Integer.parseInt(String.valueOf(num1)) - Integer.parseInt(String.valueOf(num2));
                 break;
-            case '*':
-                result = num1 * num2;
+            case "*":
+                result = Integer.parseInt(String.valueOf(num1)) * Integer.parseInt(String.valueOf(num2));
                 break;
-            case '/':
-                if (num2 != 0) {
-                    result = num1 / num2;
+            case "/":
+                if (Integer.parseInt(String.valueOf(num2)) != 0) {
+                    result = Integer.parseInt(String.valueOf(num1)) / Integer.parseInt(String.valueOf(num2));
                 } else {
                     return "Ошибка: деление на ноль.";
                 }
@@ -52,7 +64,7 @@ class Main {
             default:
                 return "Ошибка: неверная арифметическая операция.";
         }
-        // Возвращаем результат в виде строки
+
         return String.valueOf(result);
     }
 
