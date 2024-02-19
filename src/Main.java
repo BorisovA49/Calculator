@@ -9,7 +9,7 @@ class Main {
     }
 
 
-    static String calc(String input) {
+    private static String calc(String input) {
 
         boolean bool = false;
         input = input.replaceAll("\\s+", "");  // удаляем  пробелы
@@ -80,7 +80,6 @@ class Main {
     private static String convertNumToRoman(int input) {
         return Constant.RIMNUMBER[Integer.parseInt(String.valueOf(input))];
     }
-
 
     private static int romanToNumber(String roman) {
 
