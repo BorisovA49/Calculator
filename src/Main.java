@@ -9,8 +9,7 @@ class Main {
     }
 
 
-    private static String calc(String input) {
-
+    public static String calc(String input) {
         boolean bool = false;
         input = input.replaceAll("\\s+", "");  // удаляем  пробелы
         String[] opera = {"+", "-", "/", "*"};
@@ -35,16 +34,17 @@ class Main {
                 }
             }
         }
+        if (!Arrays.asList(opera).contains(operators)) {
+            throw new IllegalArgumentException("Неверный формат ввода");
+        }
         if (Arrays.asList(Constant.RIMNUMBER).contains(String.valueOf(num1)) && Arrays.asList(Constant.RIMNUMBER).contains(String.valueOf(num2))) {  //римские
             bool = true;
             num3 = romanToNumber(String.valueOf(num1));
             num4 = romanToNumber(String.valueOf(num2));
-
         } else if (!Arrays.asList(Constant.RIMNUMBER).contains(String.valueOf(num1)) && !Arrays.asList(Constant.RIMNUMBER).contains(String.valueOf(num2))) {  //римские
             num3 = Integer.parseInt(String.valueOf(num1));
             num4 = Integer.parseInt(String.valueOf(num2));
-        } else
-            throw new IllegalArgumentException("Разный формат чисел");
+        } else throw new IllegalArgumentException("Разный формат чисел");
 
         if (!((num3 >= 0 && num3 < 11) && (num4 >= 0 && num4 < 11))) {
             throw new IllegalArgumentException("Неверный диапазон чисел");
@@ -61,19 +61,14 @@ class Main {
                 result = num3 * num4;
                 break;
             case "/":
-                if (num4 != 0) {
-                    result = num3 / num4;
-                } else {
-                    return "Деление на 0";
-                }
+                result = num3 / num4;
                 break;
             default:
                 return "Неизвестный оператор";
         }
         if (bool) {
             return convertNumToRoman(Integer.parseInt(String.valueOf(result)));
-        } else
-            return String.valueOf(result);
+        } else return String.valueOf(result);
     }
 
 
@@ -98,4 +93,3 @@ class Main {
         };
     }
 }
-
