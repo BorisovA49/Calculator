@@ -3,14 +3,14 @@ import java.util.Scanner;
 
 class Main {
     public static void main(String[] args) {
-
-        System.out.println("Результат: " + calc());
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        System.out.println("Результат: " + calc(input));
     }
 
 
-    static String calc() {
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
+    static String calc(String input) {
+
         boolean bool = false;
         input = input.replaceAll("\\s+", "");  // удаляем  пробелы
         String[] opera = {"+", "-", "/", "*"};
